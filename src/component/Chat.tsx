@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Popover,
-  Skeleton,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Popover, Stack, TextField } from "@mui/material";
 import ChatSkeleton from "./ChatSkeleton";
 import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
@@ -15,11 +8,12 @@ import { useRef, useState } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import useToggleMode from "../state/toggleMode";
+import reciverInfo from "../state/receiverInfo";
 
 function Chat() {
+  let { receiver } = reciverInfo();
   let { dark } = useToggleMode();
   let [text, setText] = useState<string>("");
-  console.log(text);
   let handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(text);
@@ -47,7 +41,7 @@ function Chat() {
       input?.setSelectionRange(satart + emoji.length, satart + emoji.length);
     }, 0);
   };
-  
+
   return (
     <Stack sx={{ width: "100%", hight: "100%" }} className="h-screen">
       {/**********************ChatBar************************* */}
@@ -66,35 +60,20 @@ function Chat() {
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             paddingX: "10px",
             paddingY: "5px",
             gap: "10px",
           }}
         >
-          <Skeleton
-            variant="circular"
-            animation="pulse"
-            width={40}
-            height={40}
-            sx={{ backgroundColor: "teal" }}
+          <img
+            className="w-[40px] h-[40px] rounded-full"
+            src={receiver?.profile}
+            alt={receiver?.name}
           />
-          <Stack sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Skeleton
-              variant="rectangular"
-              animation="pulse"
-              width={90}
-              height={10}
-              sx={{ borderRadius: "20px", backgroundColor: "teal" }}
-            />
-            <Skeleton
-              variant="rectangular"
-              animation="pulse"
-              width={50}
-              height={10}
-              sx={{ borderRadius: "20px", backgroundColor: "teal" }}
-            />
-          </Stack>
+          <div>
+            <p className="text-sm dark:text-gray-200">{receiver?.name}</p>
+            <p className="text-xs dark:text-gray-200">online</p>
+          </div>
         </Box>
       </Box>
       {/***********************Chat************************ */}
@@ -160,7 +139,7 @@ function Chat() {
                   border: "none",
                 },
                 "& .MuiInputBase-input": {
-                  color: "white",
+                  color: dark ? "white" : "",
                 },
                 "& .MuiInputLabel-root": {
                   color: "white",
@@ -182,8 +161,11 @@ function Chat() {
               <SentimentSatisfiedAltIcon />
             </Button>
             <Popover
-          
-              sx={{ padding: "10px" , borderRadius:"30px" , backgroundColor:"none"}}
+              sx={{
+                padding: "10px",
+                borderRadius: "30px",
+                backgroundColor: "none",
+              }}
               id={id}
               open={open}
               anchorEl={anchorEl}

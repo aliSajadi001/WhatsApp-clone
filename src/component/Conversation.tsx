@@ -3,8 +3,12 @@ import { Box, Divider, InputAdornment, Stack, TextField } from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
 import ToggleMode from "./ToggleMode";
 import ConversationScleton from "./ConversationSkeleton";
+import { Conver, conversations } from "../data/conversations";
+import reciverInfo from "../state/receiverInfo";
 
 function Conversation() {
+  let {setReceiver } = reciverInfo()
+  let loading = false;
   return (
     <Stack
       className="h-full dark:bg-gradient-to-bl from-teal-950 via-teal-950 to-indigo-950 bg-white"
@@ -62,15 +66,40 @@ function Conversation() {
           },
         }}
       >
-        <ConversationScleton />
-        <ConversationScleton />
-        <ConversationScleton />
-        <ConversationScleton />
-        <ConversationScleton />
-        <ConversationScleton />
-        <ConversationScleton />
-      
-     
+        {!loading ? (
+          <div className="flex flex-col gap-6 ">
+            {conversations.map((conver: Conver) => (
+              <div onClick={() => setReceiver(conver)}
+                key={conver.id}
+                className="flex items-center gap-5 dark:hover:bg-gradient-to-l dark:from-teal-900 dark:via-teal-800 dark:to-indigo-900 p-1 rounded-lg cursor-pointer hover:bg-gray-200"
+              >
+                <img
+                  src={conver.profile}
+                  alt={conver.name}
+                  className="rounded-full w-[50px] h-[50px]"
+                />
+                <div className="flex flex-col justify-center w-full truncate">
+                  <p className="text-sm font-medium dark:text-white truncate">
+                    {conver.name}
+                  </p>
+                  <p className="text-xs font-mono dark:text-white truncate">
+                    {conver.lastMessage}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
+            <ConversationScleton />
+            <ConversationScleton />
+            <ConversationScleton />
+            <ConversationScleton />
+            <ConversationScleton />
+            <ConversationScleton />
+            <ConversationScleton />
+          </>
+        )}
       </Box>
     </Stack>
   );
