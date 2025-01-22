@@ -1,7 +1,7 @@
 import LockIcon from "@mui/icons-material/Lock";
 function EmptyPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full py-5">
+    <div className="flex flex-col items-center justify-center h-screen w-full py-5 ">
       <div className="w-full h-full flex flex-col items-center justify-center">
         <div className="flex items-center justify-center flex-col w-[500px] ">
           <img
@@ -15,7 +15,7 @@ function EmptyPage() {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-center text-gray-500 opacity-45 text-sm">
+      <div className="flex items-center justify-center text-gray-500 flex-wrap opacity-45 text-sm">
         <LockIcon className="" />
         <p>Your personal messages are fully encrypted.</p>
       </div>

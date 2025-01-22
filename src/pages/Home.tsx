@@ -4,7 +4,7 @@ import EmptyPage from "../component/EmptyPage";
 import reciverInfo from "../state/receiverInfo";
 
 function Home() {
-  let { reciver } = reciverInfo();
+  let { receiver } = reciverInfo();
   return (
     <div className="w-full h-screen flex ">
       {/*****************************Conversations*********************** */}
@@ -13,14 +13,14 @@ function Home() {
       </div>
       {/*********************************Chat**************************** */}
       <div className="w-full h-full">
-        {reciver ? (
+        {receiver ? (
           <>
             <Chat />
           </>
         ) : (
-          <>
+          <div className="hidden md:block">
             <EmptyPage />
-          </>
+          </div>
         )}
       </div>
     </div>
