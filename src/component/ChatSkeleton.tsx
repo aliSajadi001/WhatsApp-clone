@@ -14,7 +14,7 @@ function ChatSkeleton({ reciver, width, hight }: ChatSkeletonProps) {
           height={hight}
           sx={{
             borderRadius: "5px",
-            backgroundColor: reciver ? "teal" : "gray",
+            backgroundColor: reciver ? "#5F9EA0" : "#F0F8FF",
           }}
         />
       </Stack>

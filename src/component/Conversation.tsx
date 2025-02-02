@@ -7,22 +7,23 @@ import { Conver, conversations } from "../data/conversations";
 import reciverInfo from "../state/receiverInfo";
 import { useState } from "react";
 import PopoverSettings from "../component/settings/PopverSettings";
+import useToggleMode from "../state/toggleMode";
 function Conversation() {
-  let {setReceiver } = reciverInfo()
+  let { setReceiver } = reciverInfo();
   let loading = false;
-  let [open , setOpen] = useState<boolean>(false)
+  let [open, setOpen] = useState<boolean>(false);
   let handleClick = () => {
-    setOpen(true)}
-  
+    setOpen(true);
+  };  let {dark} = useToggleMode()
   return (
     <Stack
-      className="h-full bg-gradient-to-tr from-green-950 via-green-950 to-cyan-950 dark:bg-gradient-to-tl dark:from-gray-950 dark:via-slate-950 dark:to-black "
+      className="h-full bg-slate-50 text-black dark:bg-gradient-to-tl dark:from-gray-950 dark:via-slate-950 dark:to-black "
       sx={{
         position: "flex",
         flexDirection: "column",
         alignItems: "start",
         paddingY: "10px",
-        boxShadow: "rgba(2, 9, 9, 0.30) 0px 3px 8px",
+        borderRight: "1px solid gray",
       }}
     >
       {/************************* Conversation header *************************/}
@@ -30,38 +31,51 @@ function Conversation() {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent:"center",
+          justifyContent: "center",
           gap: "10px",
           width: "100%",
           cursor: "pointer",
+          borderBottom: "1px solid gray",
+          paddingY: "5px",
         }}
       >
         <ListIcon
-        onClick={handleClick}
+          onClick={handleClick}
           sx={{ fontSize: 30, color: "gray" }}
           className="dark:text-slate-500"
         />
         <PopoverSettings open={open} setOpen={setOpen} />
         <TextField
           size="small"
+          sx={{
+            
+            width: "100%",
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input": {
+              color: dark ? "white" : "",
+            },
+            "& .MuiInputLabel-root": {
+              color: "white",
+            },
+            "& .MuiInputBase-root": {
+              backgroundColor: "transparent",
+            },
+            border: "1px solid gray",
+            borderRadius: "5px",
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon sx={{color:dark?"white":"black"}}/>
               </InputAdornment>
             ),
           }}
         />
         <ToggleMode />
       </Box>
-      <Divider
-        sx={{
-          width: "100%",
-          marginY: "10px",
-          backgroundColor: "#335",
-          paddingY: "0.2px",
-        }}
-      />
+
       <Box
         sx={{
           width: "100%",
@@ -77,22 +91,23 @@ function Conversation() {
         }}
       >
         {!loading ? (
-          <div className="flex flex-col gap-6 ">
+          <div className="flex flex-col md:gap-5 gap-4 py-4">
             {conversations.map((conver: Conver) => (
-              <div onClick={() => setReceiver(conver)}
+              <div
+                onClick={() => setReceiver(conver)}
                 key={conver.id}
-                className="flex items-center gap-5 dark:hover:bg-gradient-to-l dark:from-slate-900 dark:via-gray-900 dark:to-black p-1 rounded-lg cursor-pointer hover:bg-gray-200 text-white"
+                className="flex items-center gap-4 dark:hover:bg-gradient-to-l dark:from-slate-900 dark:via-gray-900 dark:to-black p-1 rounded-lg cursor-pointer hover:bg-gray-200 text-black dark:text-neutral-500"
               >
                 <img
                   src={conver.profile}
                   alt={conver.name}
-                  className="rounded-full w-[50px] h-[50px]"
+                  className="rounded-full md:w-[50px]  md:h-[50px] w-[40px]  h-[40px] "
                 />
                 <div className="flex flex-col justify-center w-full truncate">
-                  <p className="text-sm font-medium dark:text-white truncate">
+                  <p className="text-sm font-medium text-black dark:text-neutral-500 truncate">
                     {conver.name}
                   </p>
-                  <p className="text-xs font-mono dark:text-white truncate">
+                  <p className="text-xs font-mono text-black dark:text-neutral-500 truncate">
                     {conver.lastMessage}
                   </p>
                 </div>

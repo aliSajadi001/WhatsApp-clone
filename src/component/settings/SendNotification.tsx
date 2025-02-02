@@ -13,12 +13,12 @@ interface Sound {
   name: string;
 }
 
-function Notification() {
+function SendingNotification() {
   let [loading, setLoading] = useState<boolean>(false);
   let { dark } = useToggleMode();
   let { currentUser, setCurrentUser } = useCurrentUser();
   let [selectSound, setSelectSound] = useState<string>(
-    currentUser?.notificationSound || ""
+    currentUser?.sendingSound || ""
   );
   let { playSound } = playSounds();
   let handlePlaySound = (sn: string) => {
@@ -32,7 +32,7 @@ function Notification() {
 
   let handleSubmit = async () => {
     try {
-      if (selectSound === currentUser?.notificationSound) {
+      if (selectSound === currentUser?.sendingSound) {
         return;
       }
       setLoading(true);
@@ -43,9 +43,9 @@ function Notification() {
         if (res.data.success) {
           setCurrentUser({
             ...currentUser,
-            notificationSound: res.data.user.notificationSound,
+            notificationSound: res.data.user.sendingSound,
           });
-          setSelectSound(res.data.user.notificationSound);
+          setSelectSound(res.data.user.sendingSound);
           setLoading(false);
           enqueueSnackbar(res.data.message, { variant: "success" });
         }
@@ -114,4 +114,4 @@ function Notification() {
   );
 }
 
-export default Notification;
+export default SendingNotification;

@@ -51,9 +51,10 @@ function Chat() {
           alignItems: "center",
           justifyContent: "space-between",
           paddingX: "10px",
-          paddingY: "5px",
+          paddingY: "6px",
           gap: "10px",
-          borderBottom: "1px solid gray",
+          borderBottom: dark ? "1px solid gray" : "none",
+          boxShadow: "rgba(2, 9, 9, 0.20) 0px 1px 4px",
         }}
       >
         <Box
@@ -132,9 +133,7 @@ function Chat() {
               size="small"
               sx={{
                 width: "100%",
-                backgroundColor: "#",
-                outline: "noan",
-                borderRadius: "10px",
+
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: "none",
                 },
@@ -144,6 +143,11 @@ function Chat() {
                 "& .MuiInputLabel-root": {
                   color: "white",
                 },
+                "& .MuiInputBase-root": {
+                  backgroundColor: "transparent",
+                },
+                border: "1px solid gray",
+                borderRadius: "5px",
               }}
             />
 
